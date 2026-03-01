@@ -29,3 +29,9 @@ The analysis uses `filtered_thyroid_data.csv`, containing patient records with t
 - **Staging:** T, N, M, Stage  
 - **Outcome:** Response, Recurred (target variable)  
 
+**Requirements**
+- pandas
+- numpy
+- scikit-learn
+- matplotlib
+- seaborn
