@@ -1,6 +1,6 @@
 # Thyroid Recurrence Prediction
 
-This project implements machine learning models to predict the recurrence of thyroid conditions in patients based on clinical data. It compares the performance of **Decision Tree** and **K-Nearest Neighbors (KNN)** classifiers to determine the most effective model for this medical diagnostic task.
+This project implements machine learning models to predict the recurrence of thyroid conditions in patients based on clinical data. It compares the performance of **Decision Tree**, **K-Nearest Neighbors (KNN)**, and **Random Forest** classifiers to determine the most effective model for this medical diagnostic task.
 
 ---
 
@@ -10,6 +10,7 @@ This project implements machine learning models to predict the recurrence of thy
 - **Models Implemented:**  
   - Decision Tree Classifier  
   - K-Nearest Neighbors (KNN)  
+  - Random Forest Classifier
 - **Best Performing Model:**  
   - **Decision Tree** (Accuracy: ~97.4%, Recall: 95%)  
 - **Key Techniques:** Mode Imputation, Label Encoding, One-Hot Encoding, Feature Scaling (StandardScaler)
@@ -56,10 +57,11 @@ Run the Analysis: Execute the main script:
 
 # Results Summary
 
-| Model         | Accuracy | Precision (Recurred) | Recall (Recurred) | F1-Score |
-| ------------- | -------- | -------------------- | ----------------- | -------- |
-| Decision Tree | 97.40%   | 0.95                 | 0.95              | 0.95     |
-| KNN (K=5)     | 94.81%   | 1.00                 | 0.79              | 0.88     |
+| Model         | Accuracy                   | Precision (Recurred) | Recall (Recurred) | F1-Score |
+| ------------- | -------------------------- | -------------------- | ----------------- | -------- |
+| Decision Tree | 97.40%                     | 0.95                 | 0.95              | 0.95     |
+| KNN (K=5)     | 94.81%                     | 1.00                 | 0.79              | 0.88     |
+| Random Forest | (see notebook for results) |                      |                   |          |
 
 ## Conclusion
-The Decision Tree was selected as the superior model. Although KNN achieved perfect precision, the Decision Tree provided a significantly higher recall rate (0.95 vs 0.79), meaning it is much better at identifying actual recurrence cases
+The Decision Tree was selected as the superior model. Although KNN achieved perfect precision, the Decision Tree provided a significantly higher recall rate (0.95 vs 0.79), meaning it is much better at identifying actual recurrence cases. The Random Forest classifier was also implemented for advanced comparison—see the notebook for its detailed results and performance metrics.
