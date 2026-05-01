@@ -75,11 +75,11 @@ The web interface provides:
 
 # Results Summary
 
-| Model         | Accuracy                   | Precision (Recurred) | Recall (Recurred) | F1-Score |
-| ------------- | -------------------------- | -------------------- | ----------------- | -------- |
-| Decision Tree | 97.40%                     | 0.95                 | 0.95              | 0.95     |
-| KNN (K=5)     | 94.81%                     | 1.00                 | 0.79              | 0.88     |
-| Random Forest | (see notebook for results) |                      |                   |          |
+| Model         | Accuracy    | Precision (Recurred) | Recall (Recurred) | F1-Score |  AUC  |
+| ------------- | ----------- | -------------------- | ----------------- | -------- | ----- |
+| Decision Tree | 95.45%      | 0.96                 | 0.92              | 0.94     | 0.949 |
+| KNN (K=5)     | 92.42%      | 1.00                 | 0.81              | 0.89     | 0.971 |
+| Random Forest | 93.94%      | 1.00                 | 0.85              | 0.92     | 0.989 |
 
 ## Conclusion
 The Decision Tree was selected as the superior model. Although KNN achieved perfect precision, the Decision Tree provided a significantly higher recall rate (0.95 vs 0.79), meaning it is much better at identifying actual recurrence cases. The Random Forest classifier was also implemented for advanced comparison—see the notebook for its detailed results and performance metrics.
