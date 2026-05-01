@@ -7,6 +7,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 import joblib
 import os
@@ -92,7 +93,11 @@ def load_and_train_model():
     rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
     rf_classifier.fit(X_train_scaled, y_train)
     
-    return dt_classifier, rf_classifier, scaler, X.columns, le_target
+    # Train KNN model
+    knn_classifier = KNeighborsClassifier(n_neighbors=5)
+    knn_classifier.fit(X_train_scaled, y_train)
+    
+    return dt_classifier, rf_classifier, knn_classifier, scaler, X.columns, le_target
 
 def get_feature_info():
     """Return feature information for input form"""
@@ -127,7 +132,7 @@ def main():
     
     # Load model and data
     try:
-        dt_model, rf_model, scaler, feature_names, label_encoder = load_and_train_model()
+        dt_model, rf_model, knn_model, scaler, feature_names, label_encoder = load_and_train_model()
         
         # Create input form
         st.markdown("## 📋 Patient Information")
@@ -195,9 +200,11 @@ def main():
             dt_prob = dt_model.predict_proba(input_scaled)[0]
             rf_pred = rf_model.predict(input_scaled)[0]
             rf_prob = rf_model.predict_proba(input_scaled)[0]
-            # Display results for both models
+            knn_pred = knn_model.predict(input_scaled)[0]
+            knn_prob = knn_model.predict_proba(input_scaled)[0]
+            # Display results for all models
             st.markdown("## 📊 Prediction Results (All Models)")
-            col_dt, col_rf = st.columns(2)
+            col_dt, col_knn, col_rf = st.columns(3)
             with col_dt:
                 st.markdown("### Decision Tree")
                 confidence = dt_prob[dt_pred] * 100
@@ -218,6 +225,28 @@ def main():
                 prob_df = pd.DataFrame({
                     'Outcome': ['No Recurrence', 'Recurrence'],
                     'Probability': [dt_prob[0] * 100, dt_prob[1] * 100]
+                })
+                st.bar_chart(prob_df.set_index('Outcome'))
+            with col_knn:
+                st.markdown("### K-Nearest Neighbors")
+                confidence = knn_prob[knn_pred] * 100
+                st.metric("Confidence", f"{confidence:.1f}%")
+                if knn_pred == 1:
+                    st.markdown("""
+                        <div class="prediction-box recurrence">
+                            ⚠️ High Risk: Recurrence Predicted
+                        </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown("""
+                        <div class="prediction-box no-recurrence">
+                            ✅ Low Risk: No Recurrence Predicted
+                        </div>
+                    """, unsafe_allow_html=True)
+                st.markdown("#### Probability Breakdown")
+                prob_df = pd.DataFrame({
+                    'Outcome': ['No Recurrence', 'Recurrence'],
+                    'Probability': [knn_prob[0] * 100, knn_prob[1] * 100]
                 })
                 st.bar_chart(prob_df.set_index('Outcome'))
             with col_rf:
